@@ -11,7 +11,7 @@ namespace ariel {
 
     public:
         //Constructor
-        Point(double x , double y) : x_val(x) , y_val(y){}
+        Point(double x_value , double y_value) : x_val(x_value) , y_val(y_value){}
 //        ~Point() = default;
 
         int getXval();

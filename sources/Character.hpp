@@ -5,13 +5,20 @@
 
 namespace ariel {
     class Character {
-    protected:
+    private:
         Point& location;
         int hitPoints;
         std::string name;
     public:
-        Character(std::string name, Point &location, int hitPoints) : name(name), location(location), hitPoints(hitPoints) {}
+        Character(const std::string & name, Point &location, int hitPoints) : name(name), location(location), hitPoints(hitPoints) {}
         virtual ~Character()  = default;
+
+        //for tidy:
+        Character(const Character&) = delete;
+        Character& operator=(const Character&) = delete;
+        Character(Character&&) = delete;
+        Character& operator=(Character&&) = delete;
+
         bool isAlive();
         double distance(Character* other);
         void hit(int num);

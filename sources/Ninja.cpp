@@ -13,15 +13,15 @@ namespace ariel{
         if (!isAlive() || !enemy || !enemy->isAlive()) {
             return;
         }
-        Point new_location = moveTowards(location, enemy->getLocation(), speed);
-        location = new_location;
+        Point new_location = moveTowards(getLocation(), enemy->getLocation(), speed);
+        setLocation(new_location);
     }
 
     void Ninja::slash(Character *enemy) {
         if (!isAlive() || !enemy || !enemy->isAlive()) {
             return;
         }
-        double distance = location.distance(enemy->getLocation());
+        double distance = getLocation().distance(enemy->getLocation());
         if (distance < 1.0) {
             enemy->hit(40);
         }

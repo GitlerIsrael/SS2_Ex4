@@ -13,6 +13,7 @@ using namespace std;
 using namespace ariel;
 
 
+
 TEST_CASE("Point class TESTS") {
     Point p1(0,0);
     Point p2(0,1);

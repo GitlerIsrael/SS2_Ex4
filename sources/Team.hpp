@@ -17,8 +17,13 @@ namespace ariel {
         std::vector<Character*> team;
     public:
         Team(Character* leader) : leader(leader){}
-
         ~Team() = default;
+
+        //for tidy:
+        Team(const Team&) = delete;
+        Team& operator=(const Team&) = delete;
+        Team(Team&&) = delete;
+        Team& operator=(Team&&) = delete;
 
         int getTeamSize();
         void add(Character* character);
