@@ -11,7 +11,7 @@ namespace ariel {
         std::string name;
         bool isInTeam = false;
     public:
-        Character(std::string name, Point location, int hitPoints) : name(name), location(location), hitPoints(hitPoints) {}
+        Character(std::string name, Point location, int hitPoints) : name(std::move(name)), location(location), hitPoints(hitPoints) {}
         virtual ~Character()  = default;
 
         //for tidy:

@@ -11,7 +11,7 @@ namespace ariel {
     private:
         int Bullets = BULLETS;
     public:
-        Cowboy(std::string name, Point location) : Character(name, location, DEFAULT_HIT_POINTS_COWBOY) {}
+        Cowboy(std::string name, Point location) : Character(std::move(name), location, DEFAULT_HIT_POINTS_COWBOY) {}
         ~Cowboy() override = default;
 
         //for tidy:

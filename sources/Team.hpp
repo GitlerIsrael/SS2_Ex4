@@ -17,12 +17,12 @@ namespace ariel {
         std::vector<Character*> team;
     public:
         Team(Character* leader) {
-            if(leader->getIsINTeam()) throw std::runtime_error ("Already in team.");
+            if(leader->getIsINTeam()) {throw std::runtime_error ("Already in team.");}
             this->leader = leader;
             team.push_back(leader);
             leader->setIsInTeam();
         }
-        ~Team() {
+        virtual ~Team() { //tidy requires it to be virtual.
             for (Character* member : team) {
                 delete member;
             }

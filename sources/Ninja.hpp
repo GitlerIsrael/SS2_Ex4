@@ -9,7 +9,7 @@ namespace ariel {
     private:
         int speed;
     public:
-        Ninja(int speed, std::string name, Point location, int hitPoints) : Character(name, location, hitPoints), speed(speed){}
+        Ninja(int speed, std::string name, Point location, int hitPoints) : Character(std::move(name), location, hitPoints), speed(speed){}
         ~Ninja() override = default;
 
         //for tidy:
