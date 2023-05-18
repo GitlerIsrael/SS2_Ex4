@@ -12,10 +12,9 @@ namespace ariel {
         std::vector<Character*> team;
     public:
         SmartTeam(Character* leader) : Team(leader){}
-
-//        ~SmartTeam() = default;
-
-        void attack(Team *other);
-        void print();
+        void attack(Team *other) override;
+        void print() override;
+        Character* findTarget(Team *other) override;
+        Character* findLeader() override;
     };
 }

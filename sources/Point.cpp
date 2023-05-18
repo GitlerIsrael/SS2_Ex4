@@ -8,11 +8,11 @@
 
 namespace ariel {
 
-    int Point::getXval() {
+    double Point::getXval() {
         return  x_val;
     }
 
-    int Point::getYval() {
+    double Point::getYval() {
         return  y_val;
     }
 
@@ -26,7 +26,8 @@ namespace ariel {
         std::cout << "(" << x_val<< ", " << y_val << ")";
     }
 
-    Point moveTowards(const Point &src, const Point &dest, double dist) {
+    Point Point::moveTowards(const Point &src, const Point &dest, double dist) {
+        if (dist < 0) throw std::invalid_argument("argument must be non-negative");
         double d = src.distance(dest);
         if (d <= dist) {
             return dest;

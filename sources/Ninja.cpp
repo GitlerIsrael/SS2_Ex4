@@ -10,19 +10,18 @@ namespace ariel{
     }
 
     void Ninja::move(Character *enemy) {
-        if (!isAlive() || !enemy || !enemy->isAlive()) {
+        if (!isAlive() || !enemy->isAlive()) {
             return;
         }
-        Point new_location = moveTowards(getLocation(), enemy->getLocation(), speed);
+        Point new_location = Point::moveTowards(getLocation(), enemy->getLocation(), speed);
         setLocation(new_location);
     }
 
     void Ninja::slash(Character *enemy) {
-        if (!isAlive() || !enemy || !enemy->isAlive()) {
-            return;
-        }
+        if (!isAlive() || !enemy->isAlive()) throw std::runtime_error("Can't attack if dead");
+        if (this==enemy) throw std::runtime_error("No self harm");
         double distance = getLocation().distance(enemy->getLocation());
-        if (distance < 1.0) {
+        if (distance <= 1.0) {
             enemy->hit(40);
         }
     }

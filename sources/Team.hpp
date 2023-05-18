@@ -16,8 +16,17 @@ namespace ariel {
         Character* leader;
         std::vector<Character*> team;
     public:
-        Team(Character* leader) : leader(leader){}
-        ~Team() = default;
+        Team(Character* leader) {
+            if(leader->getIsINTeam()) throw std::runtime_error ("Already in team.");
+            this->leader = leader;
+            team.push_back(leader);
+            leader->setIsInTeam();
+        }
+        ~Team() {
+            for (Character* member : team) {
+                delete member;
+            }
+        }
 
         //for tidy:
         Team(const Team&) = delete;
@@ -26,10 +35,15 @@ namespace ariel {
         Team& operator=(Team&&) = delete;
 
         int getTeamSize();
+        Character* getLeader();
+        void setLeader(Character* leader);
+        std::vector<Character*>& getTeam();
         void add(Character* character);
-        void attack(Team *other);
+        virtual void attack(Team *other);
         int stillAlive();
-        void print();
+        virtual void print();
+        virtual Character* findTarget(Team *other);
+        virtual Character* findLeader();
 
     };
 }

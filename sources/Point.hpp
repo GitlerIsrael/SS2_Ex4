@@ -14,10 +14,10 @@ namespace ariel {
         Point(double x_value , double y_value) : x_val(x_value) , y_val(y_value){}
 //        ~Point() = default;
 
-        int getXval();
-        int getYval();
+        double getXval();
+        double getYval();
         double distance(const Point &other) const;
         void print() const;
-        friend Point moveTowards(const Point& src, const Point& dest, double dist);
+        static Point moveTowards(const Point& src, const Point& dest, double dist);
     };
 }

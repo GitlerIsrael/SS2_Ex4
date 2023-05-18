@@ -6,8 +6,10 @@
 
 namespace ariel{
     void Cowboy::shoot(Character *enemy) {
-        if (!this->isAlive() || this->Bullets == 0) {
-            // Cowboy is dead or out of ammo
+        if (!this->isAlive() || !enemy->isAlive()) throw std::runtime_error("Can't attack if dead");
+        if (this==enemy) throw std::runtime_error("No self harm");
+        if (this->Bullets == 0) {
+            // out of ammo
             return;
         }
 
@@ -21,6 +23,7 @@ namespace ariel{
     }
 
     void Cowboy::reload() {
+        if (!isAlive()) throw std::runtime_error("DEAD- Can't reload");
         Bullets = 6;
     }
 

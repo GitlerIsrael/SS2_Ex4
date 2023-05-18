@@ -13,6 +13,7 @@ namespace ariel{
     }
 
     void Character::hit(int damage) {
+        if (damage<0) throw std::invalid_argument ("Can't hit with negative argument");
         hitPoints -= damage;
     }
 
@@ -30,5 +31,13 @@ namespace ariel{
 
     void  Character::setLocation(ariel::Point &point) {
         location = point;
+    }
+
+    bool Character::getIsINTeam() {
+        return isInTeam;
+    }
+
+    void Character::setIsInTeam(){
+        isInTeam = true;
     }
 }

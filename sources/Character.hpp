@@ -6,11 +6,12 @@
 namespace ariel {
     class Character {
     private:
-        Point& location;
+        Point location;
         int hitPoints;
         std::string name;
+        bool isInTeam = false;
     public:
-        Character(const std::string & name, Point &location, int hitPoints) : name(name), location(location), hitPoints(hitPoints) {}
+        Character(std::string name, Point location, int hitPoints) : name(name), location(location), hitPoints(hitPoints) {}
         virtual ~Character()  = default;
 
         //for tidy:
@@ -26,6 +27,8 @@ namespace ariel {
         Point getLocation();
         int getHitPoints();
         void setLocation(Point &point);
+        bool getIsINTeam();
+        void setIsInTeam();
         virtual std::string print() = 0;
     };
 }
