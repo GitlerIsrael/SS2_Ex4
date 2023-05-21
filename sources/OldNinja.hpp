@@ -10,6 +10,5 @@ namespace ariel {
     class OldNinja : public Ninja {
     public:
         OldNinja(const std::string & name, Point location) : Ninja(DEFAULT_SPEED_OLD, name, location, DEFAULT_HIT_POINTS_OLD) {}
-//        ~OldNinja() override = default;
     };
 }

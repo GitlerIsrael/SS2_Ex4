@@ -7,12 +7,14 @@
 
 namespace ariel {
 
+    // SmartTeam attack function.
     void SmartTeam::attack(Team* other) {
         // Throw exceptions
         if (other == nullptr) throw std::invalid_argument("Invalid team pointer - nullptr");
         if (this == other) throw std::runtime_error("No self harm");
         if (!other->stillAlive()) throw std::runtime_error("Dead team");
 
+        // Check if leader alive. if not - find new leader.
         if (!getLeader()->isAlive()) {
             Character* newLeader = findLeader();
             if (newLeader)
@@ -23,12 +25,14 @@ namespace ariel {
             }
         }
 
+        // Find target to attack.
         Character* target = findTarget(other);
 
         if (target) {
-
+            // Iterate over team fighters and attack target.
             for (Character* member : getTeam()) {
                 if (member->isAlive()) {
+                    // Check target still alive. if not - find new target.
                     if (!target->isAlive()) {
                         target = findTarget(other);
                         if (target == nullptr)
@@ -39,6 +43,7 @@ namespace ariel {
                             cowboy->shoot(target);
                         }
                         else {
+                            // If cowboy has no bullets - reload.
                             cowboy->reload();
                         }
                     }
@@ -47,6 +52,7 @@ namespace ariel {
                             ninja->slash(target);
                         }
                         else {
+                            // If ninja can't attack - get closer.
                             ninja->move(target);
                         }
                     }
@@ -54,50 +60,39 @@ namespace ariel {
             }
         }
     }
-
+    // prints team fighters
     void SmartTeam::print() {
-        std::vector<Character*> sortedTeam = getTeam();
-        std::sort(sortedTeam.begin(), sortedTeam.end(), [](Character* a, Character* b) {
-            return a->getHitPoints() > b->getHitPoints();
-        });
-
-        for (Character* member : sortedTeam) {
+        for (Character* member : getTeam()) {
             std::cout << member->print() << std::endl;
         }
     }
 
+    // Find target (ninjas and then cowboys) -- ninjas make more damage.
     Character* SmartTeam::findTarget(Team* other) {
         Character* target = nullptr;
-        double minDistance = std::numeric_limits<double>::max();
 
-        std::vector<Character*> enemyTeam = other->getTeam();
-        std::sort(enemyTeam.begin(), enemyTeam.end(), [](Character* a, Character* b) {
-            return a->getHitPoints() > b->getHitPoints();
-        });
-
-        for (Character* enemy : enemyTeam) {
+        for (Character* enemy : other->getTeam()) {
             if (enemy->isAlive()) {
-                double distance = getLeader()->distance(enemy);
-                if (distance < minDistance) {
-                    minDistance = distance;
+                if (Ninja *ninja = dynamic_cast<Ninja *>(enemy)) {
                     target = enemy;
+                    break;
+                }
+                if (Cowboy *cowboy = dynamic_cast<Cowboy *>(enemy)) {
+                    target = enemy;
+                    break;
                 }
             }
         }
         return target;
     }
 
+    // Find leader.
     Character* SmartTeam::findLeader() {
         // Find the nearest living character to be the new leader
         Character* newLeader = nullptr;
         double minDistance = std::numeric_limits<double>::max();
 
-        std::vector<Character*> sortedTeam = getTeam();
-        std::sort(sortedTeam.begin(), sortedTeam.end(), [](Character* a, Character* b) {
-            return a->getHitPoints() > b->getHitPoints();
-        });
-
-        for (Character* member : sortedTeam) {
+        for (Character* member : getTeam()) {
             if (member->isAlive()) {
                 double distance = getLeader()->distance(member);
                 if (distance < minDistance) {

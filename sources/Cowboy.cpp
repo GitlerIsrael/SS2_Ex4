@@ -5,6 +5,7 @@
 #include "Cowboy.hpp"
 
 namespace ariel{
+    // Shoot func
     void Cowboy::shoot(Character *enemy) {
         if (!this->isAlive() || !enemy->isAlive()) throw std::runtime_error("Can't attack if dead");
         if (this==enemy) throw std::runtime_error("No self harm");
@@ -18,15 +19,18 @@ namespace ariel{
         enemy->hit(10);
     }
 
+    // Returns if cowboy has bullets in his magazine.
     bool Cowboy::hasboolets() {
         return Bullets > 0;
     }
 
+    // Reload cowboy magazine with 6 bullets.
     void Cowboy::reload() {
         if (!isAlive()) throw std::runtime_error("DEAD- Can't reload");
         Bullets = 6;
     }
 
+    // Prints cowboy details.
     std::string Cowboy::print() {
         std::string s = "";
         if(isAlive()) {
@@ -40,5 +44,3 @@ namespace ariel{
         return s;
     }
 }
-
-

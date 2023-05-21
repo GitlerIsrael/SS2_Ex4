@@ -5,10 +5,12 @@
 #include "Point.hpp"
 
 namespace ariel{
+    //Returns ninja's speed.
     int Ninja::getSpeed(){
         return speed;
     }
 
+    // Move the ninja towards an enemy.
     void Ninja::move(Character *enemy) {
         if (!isAlive() || !enemy->isAlive()) {
             return;
@@ -17,6 +19,7 @@ namespace ariel{
         setLocation(new_location);
     }
 
+    // Ninja attack enemy.
     void Ninja::slash(Character *enemy) {
         if (!isAlive() || !enemy->isAlive()) throw std::runtime_error("Can't attack if dead");
         if (this==enemy) throw std::runtime_error("No self harm");
@@ -26,6 +29,7 @@ namespace ariel{
         }
     }
 
+    //Prints ninja's details.
     std::string Ninja::print() {
         std::string s = "";
         if(isAlive()) {

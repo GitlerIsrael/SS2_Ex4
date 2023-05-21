@@ -6,22 +6,28 @@
 #include <limits>
 
 namespace ariel{
+
+    // Returns the number of fighters in team.
     int Team::getTeamSize() {
         return team.size();
     }
 
+    // Returns team's leader.
     Character * Team::getLeader() {
         return leader;
     }
 
+    // Set team's leader.
     void Team::setLeader(ariel::Character * leader) {
         this->leader = leader;
     }
 
+    // Returns team's fighters vector.
     std::vector<Character*>& Team::getTeam() {
         return team;
     }
 
+    // Add new fighter to team.
     void Team::add(Character *character) {
         if(team.size()==10) throw std::runtime_error ("Can't add more than 10 fighters to team");
         if(character->getIsINTeam()) throw std::runtime_error ("Already in team.");
@@ -29,12 +35,14 @@ namespace ariel{
         character->setIsInTeam();
     }
 
+    // Team attack function.
     void Team::attack(Team *other){
         // Throw exceptions
         if(other == nullptr) throw std::invalid_argument("Invalid team pointer - nullptr");
         if(this == other) throw std::runtime_error("No self harm");
         if(!other->stillAlive()) throw std::runtime_error("Dead team");
 
+        // Check if leader alive. if not - find new leader.
         if (!leader->isAlive()) {
             Character* newLeader = findLeader();
             if (newLeader) {
@@ -46,11 +54,14 @@ namespace ariel{
             }
         }
 
+        // Find target to attack.
         Character* target = findTarget(other);
 
         if (target) { // If target exist.
+            // Iterate over team fighters (cowboys and then ninjas) and attack target.
             for (Character* member : team) {
                 if (member->isAlive()) {
+                    // Check target still alive. if not - find new target.
                     if (!target->isAlive()) {
                         target = findTarget(other);
                         if (target == nullptr) return; // No targets.
@@ -59,6 +70,7 @@ namespace ariel{
                         if (cowboy->hasboolets()) {
                             cowboy->shoot(target);
                         } else {
+                            // If cowboy has no bullets - reload.
                             cowboy->reload();
                         }
                     }
@@ -75,6 +87,7 @@ namespace ariel{
                             ninja->slash(target);
                         }
                         else {
+                            // If ninja can't attack - get closer.
                             ninja->move(target);
                         }
                     }
@@ -83,6 +96,7 @@ namespace ariel{
         }
     }
 
+    // Returns if there still alive fighters in team.
     int Team::stillAlive(){
         int counter = 0;
         for (Character* member : team) {
@@ -93,6 +107,7 @@ namespace ariel{
         return counter;
     }
 
+    // prints team fighters (cowboys and then ninjas).
     void Team::print() {
         // Separate cowboys and ninjas
         for (Character* member : team) {
@@ -107,6 +122,7 @@ namespace ariel{
         }
     }
 
+    // Find target - iterates over cowboys and then ninjas.
     Character* Team::findTarget(Team *other) {
         Character* target = nullptr;
         double minDistance = std::numeric_limits<double>::max();
@@ -136,6 +152,7 @@ namespace ariel{
         return target;
     }
 
+    // Find leader - iterates over cowboys and then ninjas.
     Character* Team::findLeader() {
         // Find the nearest living character to be the new leader
         Character* newLeader = nullptr;
