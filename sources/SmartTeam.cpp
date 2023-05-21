@@ -26,12 +26,8 @@ namespace ariel {
         Character* target = findTarget(other);
 
         if (target) {
-            std::vector<Character*> enemyTeam = other->getTeam();
-            std::sort(enemyTeam.begin(), enemyTeam.end(), [](Character* a, Character* b) {
-                return a->getHitPoints() > b->getHitPoints();
-            });
 
-            for (Character* member : enemyTeam) {
+            for (Character* member : getTeam()) {
                 if (member->isAlive()) {
                     if (!target->isAlive()) {
                         target = findTarget(other);
